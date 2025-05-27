@@ -1,31 +1,45 @@
-const express = require("express");
-const bodyParser = require("body-parser");
-const path = require("path");
+const express = require("express")
+const session = require("express-session")
+const bodyParser = require("body-parser")
+const path = require("path")
+require("dotenv").config()
 
-const { PORT } = require("./config");
-const { STATUS_CODE } = require("./constants/statusCode");
-const { MENU_LINKS } = require("./constants/navigation");
+const config = require("./config")
+const authRoutes = require("./routing/authRoutes")
+const taskRoutes = require("./routing/taskRoutes")
+const { initializeStore } = require("./store/dataStore")
 
-const app = express();
+const app = express()
+const PORT = process.env.PORT || config.server.port
 
-app.set("view engine", "ejs");
-app.set("views", "views");
+//EJS 
+app.set("view engine", "ejs")
+app.set("views", path.join(__dirname, "views"))
 
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: false }));
 
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname, "public")))
+
+
+app.use(session(config.session))
+
+
+initializeStore()
+
+
+app.use("/auth", authRoutes)
+app.use("/tasks", taskRoutes)
 
 
 app.get("/", (req, res) => {
-  res.status(STATUS_CODE.OK).render("index", {
-    title: "HMS - Home",
-    menuLinks: MENU_LINKS,
-  });
-});
-
-
+  if (req.session.userId) {
+    res.redirect("/tasks")
+  } else {
+    res.redirect("/auth/login")
+  }
+})
 
 app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
-});
+  console.log(`Server running on port ${PORT}`)
+})

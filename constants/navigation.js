@@ -1,14 +1,45 @@
-const HOME_LINK = {
-  label: "Home",
-  path: "/",
-};
+module.exports = {
+  MAIN_NAV: {
+    HOME: {
+      path: "/",
+      label: "Home",
+      icon: "home",
+    },
+    TASKS: {
+      path: "/tasks",
+      label: "My Tasks",
+      icon: "list",
+    },
+    ADD_TASK: {
+      path: "/tasks/create",
+      label: "Add Task",
+      icon: "plus",
+    },
+  },
 
-const MENU_LINKS = [
-    HOME_LINK,
-    { label: "Tasks", path: "/tasks" },
-]
+  AUTH_NAV: {
+    LOGIN: {
+      path: "/auth/login",
+      label: "Login",
+      icon: "log-in",
+    },
+    REGISTER: {
+      path: "/auth/register",
+      label: "Register",
+      icon: "user-plus",
+    },
+    LOGOUT: {
+      path: "/auth/logout",
+      label: "Logout",
+      icon: "log-out",
+    },
+  },
 
-
-
-
-module.exports = { HOME_LINK, MENU_LINKS };
+  BREADCRUMBS: {
+    HOME: "Home",
+    TASKS: "Tasks",
+    CREATE_TASK: "Create Task",
+    LOGIN: "Login",
+    REGISTER: "Register",
+  },
+}
