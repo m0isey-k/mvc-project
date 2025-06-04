@@ -1,6 +1,7 @@
 const { getTasks, getNextTaskId } = require("../store/dataStore")
 const { PENDING, COMPLETED, OVERDUE } = require("../constants/taskStatus")
 
+
 class Task {
   constructor(userId, title, description, dueDate) {
     this.id = getNextTaskId()
@@ -11,7 +12,6 @@ class Task {
     this.status = PENDING
     this.createdAt = new Date()
   }
-
   static create(taskData) {
     const { userId, title, description, dueDate } = taskData
     const task = new Task(userId, title, description, dueDate)
@@ -49,11 +49,13 @@ class Task {
     const userTasks = this.findByUserId(userId)
     const today = new Date().toISOString().split("T")[0]
 
+    // Update 
     userTasks.forEach((task) => {
       if (task.status === PENDING && task.dueDate < today) {
         task.status = OVERDUE
       }
     })
+    // Sort 
     return this.sortTasks(userTasks, sortBy)
   }
 

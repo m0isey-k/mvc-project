@@ -3,11 +3,11 @@ const { PENDING, COMPLETED, LABELS } = require("../constants/taskStatus")
 const { LABELS: SORT_LABELS } = require("../constants/sortOptions")
 const { OK, BAD_REQUEST } = require("../constants/statusCode")
 
+
 const taskController = {
   index: (req, res) => {
     const sortBy = req.query.sort || "date_asc"
     const tasks = Task.getTasksWithStatus(req.session.userId, sortBy)
-
     res.render("tasks/index", {
       title: "My Tasks",
       tasks,
@@ -37,14 +37,12 @@ const taskController = {
           username: req.session.username,
         })
       }
-
       Task.create({
         userId: req.session.userId,
         title,
         description,
         dueDate,
       })
-
       res.redirect("/tasks")
     } catch (error) {
       res.status(BAD_REQUEST).render("tasks/create", {
@@ -59,12 +57,10 @@ const taskController = {
     try {
       const taskId = req.params.id
       const task = Task.findById(taskId)
-
       if (task && task.userId === req.session.userId) {
         const newStatus = task.status === COMPLETED ? PENDING : COMPLETED
         Task.updateStatus(taskId, newStatus)
       }
-
       res.redirect("/tasks")
     } catch (error) {
       res.redirect("/tasks")

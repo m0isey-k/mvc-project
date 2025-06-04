@@ -4,6 +4,7 @@ const authMiddleware = require("../utils/authMiddleware")
 
 const router = express.Router()
 
+//Routy dostępne po logowaniu
 router.use(authMiddleware)
 
 router.get("/", taskController.index)

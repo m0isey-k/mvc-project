@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Household Task Management</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <h1>Household Task Manager</h1>
+            <div class="user-info">
+                <span>Welcome, <%= username %>!</span>
+                <nav class="nav">
+                    <a href="/tasks/create">Add New Task</a>
+                    <form action="/auth/logout" method="POST" style="display: inline;">
+                        <button type="submit" class="btn btn-secondary btn-sm">Logout</button>
+                    </form>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="sort-container">
+            <label for="sortSelect">Sort by:</label>
+            <select id="sortSelect" onchange="changeSorting(this.value)">
+                <% Object.entries(sortLabels).forEach(([value, label]) => { %>
+                    <option value="<%= value %>" <%= currentSort === value ? 'selected' : '' %>>
+                        <%= label %>
+                    </option>
+                <% }) %>
+            </select>
+        </div>
+
+        <% if (tasks.length === 0) { %>
+            <div class="empty-state">
+                <h3>No Tasks Yet</h3>
+                <p>You haven't created any tasks yet. Start by adding your first household task!</p>
+                <a href="/tasks/create" class="btn btn-primary">Add Your First Task</a>
+            </div>
+        <% } else { %>
+            <div class="tasks-container">
+                <% tasks.forEach(task => { %>
+                    <div class="task-card <%= task.status %>">
+                        <div class="task-header">
+                            <h3 class="task-title"><%= task.title %></h3>
+                            <span class="task-status status-<%= task.status %>">
+                                <%= statusLabels[task.status] %>
+                            </span>
+                        </div>
+                        
+                        <% if (task.description) { %>
+                            <p class="task-description"><%= task.description %></p>
+                        <% } %>
+                        
+                        <div class="task-meta">
+                            <span><strong>Due:</strong> <%= new Date(task.dueDate).toLocaleDateString('en-US', { 
+                                weekday: 'short', 
+                                year: 'numeric', 
+                                month: 'short', 
+                                day: 'numeric' 
+                            }) %></span>
+                            <span><strong>Created:</strong> <%= task.createdAt.toLocaleDateString('en-US') %></span>
+                        </div>
+                        
+                        <div class="task-actions">
+                            <form action="/tasks/<%= task.id %>/toggle" method="POST" style="display: inline;">
+                                <button type="submit" class="btn btn-sm <%= task.status === 'completed' ? 'btn-secondary' : 'btn-success' %>">
+                                    <%= task.status === 'completed' ? 'Mark as Pending' : 'Mark as Complete' %>
+                                </button>
+                            </form>
+                            
+                            <form action="/tasks/<%= task.id %>/delete" method="POST" style="display: inline;" 
+                                  onsubmit="return confirm('Are you sure you want to delete this task?')">
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } %>
+    </div>
+
+    <script>
+        function changeSorting(sortValue) {
+            window.location.href = '/tasks?sort=' + sortValue;
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to task cards
+            const taskCards = document.querySelectorAll('.task-card');
+            taskCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
