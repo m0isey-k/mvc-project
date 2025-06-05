@@ -21,7 +21,7 @@ const taskController = {
     })
   },
 
-  //Create task formt
+  //Create task form
   showCreate: (req, res) => {
     const theme = req.session.theme || "light"
     res.render("tasks/create", {

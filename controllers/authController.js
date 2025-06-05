@@ -2,7 +2,7 @@ const User = require("../models/User")
 const { OK, BAD_REQUEST } = require("../constants/statusCode")
 
 const authController = {
-  // Show login form
+  //Login form
   showLogin: (req, res) => {
     const theme = req.session.theme || "light"
     res.render("auth/login", {
@@ -12,7 +12,7 @@ const authController = {
     })
   },
 
-  // Show registration form
+  //Registration form
   showRegister: (req, res) => {
     const theme = req.session.theme || "light"
     res.render("auth/register", {
@@ -22,7 +22,7 @@ const authController = {
     })
   },
 
-  // Login process
+  // Login 
   login: async (req, res) => {
     try {
       const { email, password } = req.body
