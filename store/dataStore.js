@@ -13,12 +13,18 @@ const initializeStore = () => {
     createdAt: new Date(),
   })
 
-  // Sample tasks
-  const today = new Date()
-  const tomorrow = new Date(today)
+  // Sample tasks 
+  const now = new Date()
+  const tomorrow = new Date(now)
   tomorrow.setDate(tomorrow.getDate() + 1)
-  const yesterday = new Date(today)
+  tomorrow.setHours(14, 30, 0, 0) 
+
+  const yesterday = new Date(now)
   yesterday.setDate(yesterday.getDate() - 1)
+  yesterday.setHours(10, 0, 0, 0) 
+
+  const today = new Date(now)
+  today.setHours(16, 0, 0, 0) 
 
   tasks.push(
     {
@@ -26,7 +32,7 @@ const initializeStore = () => {
       userId: 1,
       title: "Vacuum the living room",
       description: "Thoroughly vacuum the entire living room including under furniture",
-      dueDate: tomorrow.toISOString().split("T")[0],
+      dueDate: tomorrow,
       status: "pending",
       createdAt: new Date(),
     },
@@ -35,7 +41,7 @@ const initializeStore = () => {
       userId: 1,
       title: "Wash the dishes",
       description: "Clean all dishes from lunch",
-      dueDate: yesterday.toISOString().split("T")[0],
+      dueDate: yesterday,
       status: "pending",
       createdAt: new Date(),
     },
@@ -44,7 +50,7 @@ const initializeStore = () => {
       userId: 1,
       title: "Do laundry",
       description: "Wash and hang clothes",
-      dueDate: today.toISOString().split("T")[0],
+      dueDate: today,
       status: "completed",
       createdAt: new Date(),
     },

@@ -1,11 +1,29 @@
 const formatDate = (dateString) => {
   const date = new Date(dateString)
-  return date.toLocaleDateString("en-US")
+  return date.toLocaleDateString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  })
+}
+
+const formatDateTime = (dateString) => {
+  const date = new Date(dateString)
+  return date.toLocaleString("en-US", {
+    weekday: "short",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  })
 }
 
 const isOverdue = (dateString) => {
-  const today = new Date().toISOString().split("T")[0]
-  return dateString < today
+  const now = new Date()
+  const taskDate = new Date(dateString)
+  return taskDate < now
 }
 
 const getDateClass = (task) => {
@@ -14,15 +32,23 @@ const getDateClass = (task) => {
   return "pending"
 }
 
-const getTomorrowDate = () => {
+const getTomorrowDateTime = () => {
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
-  return tomorrow.toISOString().split("T")[0]
+  tomorrow.setHours(12, 0, 0, 0) 
+  return tomorrow.toISOString().slice(0, 16) 
+}
+
+const getCurrentDateTime = () => {
+  const now = new Date()
+  return now.toISOString().slice(0, 16)
 }
 
 module.exports = {
   formatDate,
+  formatDateTime,
   isOverdue,
   getDateClass,
-  getTomorrowDate,
+  getTomorrowDateTime,
+  getCurrentDateTime,
 }

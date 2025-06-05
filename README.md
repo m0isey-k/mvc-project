@@ -61,9 +61,6 @@ This application helps users efficiently manage their household tasks by providi
    
    **Production mode:**
    npm start
-   
-   **Development mode (with auto-restart):**
-   npm run dev
 
 5. **Access the application:**
    Open your browser and navigate to \`http://localhost:3000\`

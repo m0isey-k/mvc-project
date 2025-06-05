@@ -12,5 +12,6 @@ router.get("/create", taskController.showCreate)
 router.post("/create", taskController.create)
 router.post("/:id/toggle", taskController.toggleComplete)
 router.post("/:id/delete", taskController.delete)
+router.post("/toggle-theme", taskController.toggleTheme)
 
 module.exports = router
