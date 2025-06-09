@@ -1,158 +1,256 @@
-# Household Task Management System
+# System Zarządzania Zadaniami Domowymi
 
-A web-based household task management system built with Node.js, Express.js, and EJS using the MVC architecture pattern with Server-Side Rendering.
+Internetowy system zarządzania zadaniami domowymi zbudowany w Node.js, Express.js i EJS z wykorzystaniem wzorca architektonicznego MVC i renderowania po stronie serwera (SSR).
 
-## Project Description
+## 📋 Opis Projektu
 
-This application helps users efficiently manage their household tasks by providing:
-- Task creation with due dates
-- Task status tracking (pending, completed, overdue)
-- Visual highlighting of overdue tasks
-- Task sorting by various criteria
-- User authentication and session management
+Ta aplikacja pomaga użytkownikom efektywnie zarządzać zadaniami domowymi poprzez:
 
-## Features
+- ✅ Tworzenie zadań z terminami wykonania
+- 🔄 Śledzenie statusu zadań (oczekujące, ukończone, przeterminowane)
+- 🎨 Wizualne wyróżnianie przeterminowanych zadań
+- 📊 Sortowanie zadań według różnych kryteriów
+- 🔐 Uwierzytelnianie użytkowników i zarządzanie sesjami
+- 🌙 Tryb ciemny/jasny z przełączaniem motywów
 
-### User Management
-- **User Registration** - Create new user accounts with secure password hashing
-- **User Authentication** - Secure login/logout functionality
-- **Session Management** - Maintain user sessions across requests
-- **Password Security** - Passwords are hashed using bcryptjs
+## ⭐ Funkcjonalności
 
-### Task Management
-- **Add Tasks** - Create new tasks with title, description, and due date
-- **Mark as Complete** - Toggle task completion status
-- **Delete Tasks** - Remove tasks permanently
-- **Automatic Overdue Detection** - Tasks past their due date are automatically marked as overdue
-- **Task Sorting** by:
-  - Date (ascending/descending)
-  - Status (overdue → pending → completed)
-  - Title (alphabetical)
+### 👥 Zarządzanie Użytkownikami
+- **Rejestracja Użytkowników** - Tworzenie nowych kont z bezpiecznym hashowaniem haseł
+- **Uwierzytelnianie** - Bezpieczna funkcjonalność logowania/wylogowywania
+- **Zarządzanie Sesjami** - Utrzymywanie sesji użytkowników między żądaniami
+- **Bezpieczeństwo Haseł** - Hasła są hashowane przy użyciu bcryptjs
 
-### User Interface
-- **Responsive Design** - Works on desktop, tablet, and mobile devices
-- **Visual Status Indicators** - Different colors and styles for task statuses
-- **Intuitive Navigation** - Easy-to-use interface with clear navigation
-- **Smooth Animations** - CSS transitions and hover effects
-- **Modern Styling** - Clean, professional appearance with gradients and shadows
+### 📝 Zarządzanie Zadaniami
+- **Dodawanie Zadań** - Tworzenie nowych zadań z tytułem, opisem i terminem wykonania
+- **Oznaczanie jako Ukończone** - Przełączanie statusu ukończenia zadania
+- **Usuwanie Zadań** - Trwałe usuwanie zadań
+- **Automatyczne Wykrywanie Przeterminowanych** - Zadania po terminie są automatycznie oznaczane jako przeterminowane
+- **Wyszukiwanie Zadań** - Wyszukiwanie zadań po tytule i opisie
+- **Sortowanie Zadań według:**
+  - Daty (rosnąco/malejąco)
+  - Statusu (przeterminowane → oczekujące → ukończone)
+  - Tytułu (alfabetycznie)
 
-## Installation and Setup
+### 🎨 Interfejs Użytkownika
+- **Responsywny Design** - Działa na komputerach, tabletach i urządzeniach mobilnych
+- **Wizualne Wskaźniki Statusu** - Różne kolory i style dla statusów zadań
+- **Intuicyjna Nawigacja** - Łatwy w użyciu interfejs z przejrzystą nawigacją
+- **Płynne Animacje** - Przejścia CSS i efekty hover
+- **Nowoczesny Styl** - Czysty, profesjonalny wygląd z gradientami i cieniami
+- **Tryb Ciemny/Jasny** - Przełączanie między motywami jasnym i ciemnym
+- **Statystyki Zadań** - Przegląd liczby zadań według statusu
 
-### Prerequisites
-- Node.js version 14.0 or higher
+## 🚀 Instalacja i Konfiguracja
+
+### Wymagania Wstępne
+- Node.js w wersji 14.0 lub wyższej
 - npm (Node Package Manager)
 
-### Installation Steps
+### Kroki Instalacji
 
-1. **Clone the repository:**
+1. **Sklonuj repozytorium:**
+   \`\`\`bash
    git clone https://github.com/m0isey-k/mvc-project.git
    cd mvc-project
+   \`\`\`
 
-2. **Install dependencies:**
+2. **Zainstaluj zależności:**
+   \`\`\`bash
    npm install
+   \`\`\`
 
-3. **Configure environment variables:**
-   Create a \`.env\` file in the root directory:
+3. **Skonfiguruj zmienne środowiskowe:**
+   Utwórz plik `.env` w katalogu głównym:
+   \`\`\`env
    PORT=3000
-   SESSION_SECRET=your-secret-key-here
+   SESSION_SECRET=twoj-sekretny-klucz-tutaj
    NODE_ENV=development
+   \`\`\`
 
-4. **Run the application:**
+4. **Uruchom aplikację:**
    
-   **Production mode:**
+   **Tryb produkcyjny:**
+   \`\`\`bash
    npm start
+   \`\`\`
+   
+   **Tryb deweloperski (z automatycznym restartowaniem):**
+   \`\`\`bash
+   npm run dev
+   \`\`\`
 
-5. **Access the application:**
-   Open your browser and navigate to \`http://localhost:3000\`
+5. **Uzyskaj dostęp do aplikacji:**
+   Otwórz przeglądarkę i przejdź do `http://localhost:3000`
 
-## Dependencies
+## 📦 Zależności
 
-### Main Dependencies
-- **express** (^4.18.2) - Web framework for Node.js
-- **ejs** (^3.1.9) - Embedded JavaScript templating engine
-- **bcryptjs** (^2.4.3) - Password hashing library
-- **express-session** (^1.17.3) - Session middleware for Express
-- **body-parser** (^1.20.2) - Parse incoming request bodies
-- **dotenv** (^16.3.1) - Environment variable management
+### Główne Zależności
+- **express** (^4.18.2) - Framework webowy dla Node.js
+- **ejs** (^3.1.9) - Silnik szablonów Embedded JavaScript
+- **bcryptjs** (^2.4.3) - Biblioteka do hashowania haseł
+- **express-session** (^1.17.3) - Middleware sesji dla Express
+- **body-parser** (^1.20.2) - Parsowanie przychodzących treści żądań
+- **dotenv** (^16.3.1) - Zarządzanie zmiennymi środowiskowymi
 
-### Development Dependencies
-- **nodemon** (^3.0.1) - Automatic server restart during development
+### Zależności Deweloperskie
+- **nodemon** (^3.0.1) - Automatyczny restart serwera podczas rozwoju
 
-## Application Structure
+## 🏗️ Struktura Aplikacji
 
-### MVC Architecture
+### Architektura MVC
 
-#### Models (\`models/\`)
-- **User.js** - User model with authentication methods, registration, and validation
-- **Task.js** - Task model with CRUD operations, sorting, and status management
+#### Modele (`models/`)
+- **User.js** - Model użytkownika z metodami uwierzytelniania, rejestracji i walidacji
+- **Task.js** - Model zadania z operacjami CRUD, sortowaniem i zarządzaniem statusem
 
-#### Views (\`views/\`)
-- **auth/login.ejs** - User login form with modern styling
-- **auth/register.ejs** - User registration form
-- **tasks/index.ejs** - Task list with sorting options and status indicators
-- **tasks/create.ejs** - New task creation form with validation
+#### Widoki (`views/`)
+- **auth/login.ejs** - Formularz logowania użytkownika z nowoczesnym stylem
+- **auth/register.ejs** - Formularz rejestracji użytkownika
+- **tasks/index.ejs** - Lista zadań z opcjami sortowania i wskaźnikami statusu
+- **tasks/create.ejs** - Formularz tworzenia nowego zadania z walidacją
+- **error.ejs** - Strona błędu z obsługą motywów
 
-#### Controllers (\`controllers/\`)
-- **authController.js** - Handles authentication (login, register, logout)
-- **taskController.js** - Manages task operations (CRUD, sorting, status updates)
+#### Kontrolery (`controllers/`)
+- **authController.js** - Obsługuje uwierzytelnianie (logowanie, rejestracja, wylogowywanie)
+- **taskController.js** - Zarządza operacjami zadań (CRUD, sortowanie, aktualizacje statusu)
 
-### Additional Components
+### Dodatkowe Komponenty
 
-#### Routing (\`routing/\`)
-- **authRoutes.js** - Authentication-related routes
-- **taskRoutes.js** - Task management routes with authentication middleware
+#### Routing (`routing/`)
+- **authRoutes.js** - Trasy związane z uwierzytelnianiem
+- **taskRoutes.js** - Trasy zarządzania zadaniami z middleware uwierzytelniania
 
-#### Data Store (\`store/\`)
-- **dataStore.js** - In-memory data simulation with sample data
+#### Przechowywanie Danych (`store/`)
+- **dataStore.js** - Przechowywanie danych w plikach JSON z przykładowymi danymi
 
-#### Utilities (\`utils/\`)
-- **authMiddleware.js** - Authentication middleware for protected routes
-- **dateHelpers.js** - Date formatting and manipulation utilities
+#### Narzędzia (`utils/`)
+- **authMiddleware.js** - Middleware uwierzytelniania dla chronionych tras
+- **dateHelpers.js** - Narzędzia do formatowania i manipulacji dat
 
-#### Constants (\`constants/\`)
-- **statusCode.js** - HTTP status codes and application status constants
-- **navigation.js** - Navigation menu items and breadcrumb definitions
-- **taskStatus.js** - Task status definitions and display labels
-- **sortOptions.js** - Sorting options and their display labels
+#### Stałe (`constants/`)
+- **statusCode.js** - Kody statusu HTTP i stałe statusu aplikacji
+- **navigation.js** - Elementy menu nawigacji i definicje breadcrumb
+- **taskStatus.js** - Definicje statusu zadań i etykiety wyświetlania
+- **sortOptions.js** - Opcje sortowania i ich etykiety wyświetlania
 
-#### Static Assets (\`public/\`)
-- **css/style.css** - Comprehensive CSS with responsive design, animations, and modern styling
+#### Zasoby Statyczne (`public/`)
+- **css/style.css** - Kompleksowy CSS z responsywnym designem, animacjami i nowoczesnym stylem
 
-## Sample Data
+## 📊 Przykładowe Dane
 
-The application includes sample data for testing:
+Aplikacja zawiera przykładowe dane do testowania:
 
-### Test User Account
+### Testowe Konto Użytkownika
 - **Email:** admin@example.com
-- **Password:** password
+- **Hasło:** password
 
-### Sample Tasks
-1. **Vacuum the living room** - Due tomorrow (Status: Pending)
-2. **Wash the dishes** - Overdue task (Status: Overdue)
-3. **Do laundry** - Completed task (Status: Completed)
+### Przykładowe Zadania
+1. **Odkurzanie salonu** - Termin jutro (Status: Oczekujące)
+2. **Zmywanie naczyń** - Zadanie przeterminowane (Status: Przeterminowane)
+3. **Pranie** - Zadanie ukończone (Status: Ukończone)
 
-## Security Features
+## 🔒 Funkcje Bezpieczeństwa
 
-- **Password Hashing** - All passwords are securely hashed using bcryptjs
-- **Session Management** - Secure session handling with configurable options
-- **Input Validation** - Server-side validation for all user inputs
-- **Authentication Middleware** - Protected routes require valid authentication
-- **CSRF Protection** - Form-based requests are protected
-- **Environment Variables** - Sensitive configuration stored in environment variables
+- **Hashowanie Haseł** - Wszystkie hasła są bezpiecznie hashowane przy użyciu bcryptjs
+- **Zarządzanie Sesjami** - Bezpieczna obsługa sesji z konfigurowalnymi opcjami
+- **Walidacja Wejścia** - Walidacja po stronie serwera dla wszystkich danych wejściowych użytkownika
+- **Middleware Uwierzytelniania** - Chronione trasy wymagają ważnego uwierzytelnienia
+- **Ochrona CSRF** - Żądania oparte na formularzach są chronione
+- **Zmienne Środowiskowe** - Wrażliwa konfiguracja przechowywana w zmiennych środowiskowych
 
-## API Endpoints
+## 🛠️ Endpointy API
 
-### Authentication Routes
-- \`GET /auth/login\` - Display login form
-- \`POST /auth/login\` - Process login
-- \`GET /auth/register\` - Display registration form
-- \`POST /auth/register\` - Process registration
-- \`POST /auth/logout\` - Logout user
+### Trasy Uwierzytelniania
+- `GET /auth/login` - Wyświetl formularz logowania
+- `POST /auth/login` - Przetwórz logowanie
+- `GET /auth/register` - Wyświetl formularz rejestracji
+- `POST /auth/register` - Przetwórz rejestrację
+- `POST /auth/logout` - Wyloguj użytkownika
+- `POST /auth/toggle-theme` - Przełącz motyw (dostępne bez uwierzytelniania)
 
-### Task Routes (Protected)
-- \`GET /tasks\` - Display task list
-- \`GET /tasks/create\` - Display task creation form
-- \`POST /tasks/create\` - Create new task
-- \`POST /tasks/:id/toggle\` - Toggle task completion status
-- \`POST /tasks/:id/delete\` - Delete task
+### Trasy Zadań (Chronione)
+- `GET /tasks` - Wyświetl listę zadań
+- `GET /tasks/create` - Wyświetl formularz tworzenia zadania
+- `POST /tasks/create` - Utwórz nowe zadanie
+- `POST /tasks/:id/toggle` - Przełącz status ukończenia zadania
+- `POST /tasks/:id/delete` - Usuń zadanie
+- `POST /tasks/toggle-theme` - Przełącz motyw (dla uwierzytelnionych użytkowników)
 
+## 🎯 Rozwój
+
+### Struktura Projektu
+\`\`\`
+mvc-project/
+├── constants/           # Stałe aplikacji
+│   ├── navigation.js
+│   ├── sortOptions.js
+│   ├── statusCode.js
+│   └── taskStatus.js
+├── controllers/         # Kontrolery MVC
+│   ├── authController.js
+│   └── taskController.js
+├── models/             # Modele MVC
+│   ├── Task.js
+│   └── User.js
+├── public/             # Zasoby statyczne
+│   └── css/
+│       └── style.css
+├── routing/            # Definicje tras
+│   ├── authRoutes.js
+│   └── taskRoutes.js
+├── store/              # Przechowywanie danych
+│   ├── data/           # Pliki danych JSON
+│   └── dataStore.js
+├── utils/              # Funkcje narzędziowe
+│   ├── authMiddleware.js
+│   └── dateHelpers.js
+├── views/              # Szablony EJS
+│   ├── auth/
+│   │   ├── login.ejs
+│   │   └── register.ejs
+│   ├── tasks/
+│   │   ├── create.ejs
+│   │   └── index.ejs
+│   └── error.ejs
+├── .env                # Zmienne środowiskowe
+├── .gitignore
+├── config.js           # Konfiguracja aplikacji
+├── package.json
+├── README.md
+└── server.js           # Główny plik aplikacji
+\`\`\`
+
+### Styl Kodu
+- Funkcje JavaScript ES6+
+- Architektura modularna z wyraźnym rozdzieleniem obowiązków
+- Spójne konwencje nazewnictwa
+- Kompleksowa obsługa błędów
+- Responsywny CSS z nowoczesnymi funkcjami
+
+## 🚀 Przyszłe Ulepszenia
+
+- Integracja z bazą danych (MongoDB, PostgreSQL)
+- Kategorie i tagi zadań
+- Udostępnianie zadań i współpraca
+- Powiadomienia e-mail o terminach
+- Aplikacja mobilna
+- REST API dla integracji z zewnętrznymi systemami
+- Szablony zadań i zadania cykliczne
+- Załączniki plików do zadań
+- Poziomy priorytetów zadań
+- Zaawansowane filtrowanie i wyszukiwanie
+- Eksport zadań do CSV/PDF
+- Statystyki i raporty użytkowników
+
+## 📄 Licencja
+
+Ten projekt jest licencjonowany na licencji GPL-3.0 - zobacz plik LICENSE, aby uzyskać szczegóły.
+
+## 👨‍💻 Autor
+
+Stworzony jako projekt kursowy do nauki tworzenia aplikacji webowych przy użyciu Node.js i architektury MVC.
+
+---
+
+**Uwaga:** Ta aplikacja używa przechowywania danych w pamięci z plikami JSON. Dane są zachowywane między restartami serwera, ale dla zastosowań produkcyjnych zaleca się integrację z odpowiednią bazą danych.
