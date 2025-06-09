@@ -1,3 +1,4 @@
+
 const fs = require("fs")
 const path = require("path")
 
@@ -122,7 +123,6 @@ const initializeStore = () => {
 }
 
 const createSampleData = () => {
-  // Sample user
   const sampleUser = {
     id: getNextUserId(),
     username: "admin",
