@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= theme %>">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %> - Household Task Management</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container" style="text-align: center; max-width: 600px;">
+            <h1 style="color: var(--text-primary); margin-bottom: 1rem; font-size: 3rem;">
+                <%= title.includes('404') ? '404' : 'Error' %>
+            </h1>
+            <h2 style="color: var(--text-secondary); margin-bottom: 2rem;">
+                <%= title %>
+            </h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">
+                <%= message %>
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <a href="/" class="btn btn-primary">Go Home</a>
+                <button onclick="history.back()" class="btn btn-secondary">Go Back</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

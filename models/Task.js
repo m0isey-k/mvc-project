@@ -1,46 +1,51 @@
-const { getTasks, getNextTaskId } = require("../store/dataStore")
+const { getTasks, addTask, updateTask, deleteTask } = require("../store/dataStore")
 const { PENDING, COMPLETED, OVERDUE } = require("../constants/taskStatus")
 
 class Task {
-  constructor(userId, title, description, dueDate) {
-    this.id = getNextTaskId()
+  constructor(userId, title, description, dueDate, id = null) {
+    this.id = id
     this.userId = userId
     this.title = title
     this.description = description
-    this.dueDate = new Date(dueDate) 
+    this.dueDate = new Date(dueDate)
     this.status = PENDING
     this.createdAt = new Date()
   }
 
   static create(taskData) {
     const { userId, title, description, dueDate } = taskData
-    const task = new Task(userId, title, description, dueDate)
-    getTasks().push(task)
+    const { getNextTaskId } = require("../store/dataStore")
+
+    const task = new Task(userId, title, description, dueDate, getNextTaskId())
+
+    addTask(task)
+
     return task
   }
 
   static findByUserId(userId) {
-    return getTasks().filter((task) => task.userId === Number.parseInt(userId))
+    const tasks = getTasks()
+    return tasks.filter((task) => task.userId === Number.parseInt(userId))
   }
 
   static findById(id) {
-    return getTasks().find((task) => task.id === Number.parseInt(id))
+    const tasks = getTasks()
+    return tasks.find((task) => task.id === Number.parseInt(id))
   }
 
   static updateStatus(id, status) {
     const task = this.findById(id)
     if (task) {
-      task.status = status
-      return task
+      const updatedTask = updateTask(id, { status })
+      return updatedTask
     }
     return null
   }
 
   static delete(id) {
-    const tasks = getTasks()
-    const index = tasks.findIndex((task) => task.id === Number.parseInt(id))
-    if (index !== -1) {
-      return tasks.splice(index, 1)[0]
+    const task = this.findById(id)
+    if (task) {
+      return deleteTask(id)
     }
     return null
   }
@@ -49,14 +54,18 @@ class Task {
     const userTasks = this.findByUserId(userId)
     const now = new Date()
 
-    //Update status
+    let hasChanges = false
     userTasks.forEach((task) => {
       if (task.status === PENDING && new Date(task.dueDate) < now) {
         task.status = OVERDUE
+        updateTask(task.id, { status: OVERDUE })
+        hasChanges = true
       }
     })
 
-    //Sort 
+    if (hasChanges) {
+      console.log("Updated overdue tasks status")
+    }
     return this.sortTasks(userTasks, sortBy)
   }
 
@@ -73,6 +82,31 @@ class Task {
         return tasks.sort((a, b) => a.title.localeCompare(b.title))
       default:
         return tasks
+    }
+  }
+
+  static searchTasks(userId, searchTerm) {
+    const userTasks = this.findByUserId(userId)
+    const term = searchTerm.toLowerCase().trim()
+
+    if (!term) {
+      return userTasks
+    }
+
+    return userTasks.filter(
+      (task) =>
+        task.title.toLowerCase().includes(term) || (task.description && task.description.toLowerCase().includes(term)),
+    )
+  }
+
+  static getTaskStats(userId) {
+    const userTasks = this.findByUserId(userId)
+
+    return {
+      total: userTasks.length,
+      completed: userTasks.filter((task) => task.status === COMPLETED).length,
+      pending: userTasks.filter((task) => task.status === PENDING).length,
+      overdue: userTasks.filter((task) => task.status === OVERDUE).length,
     }
   }
 }

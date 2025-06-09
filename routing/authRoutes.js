@@ -8,5 +8,6 @@ router.post("/login", authController.login)
 router.get("/register", authController.showRegister)
 router.post("/register", authController.register)
 router.post("/logout", authController.logout)
+router.post("/toggle-theme", authController.toggleTheme) 
 
 module.exports = router

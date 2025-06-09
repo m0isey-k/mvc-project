@@ -36,7 +36,7 @@ const getTomorrowDateTime = () => {
   const tomorrow = new Date()
   tomorrow.setDate(tomorrow.getDate() + 1)
   tomorrow.setHours(12, 0, 0, 0) 
-  return tomorrow.toISOString().slice(0, 16) 
+  return tomorrow.toISOString().slice(0, 16)
 }
 
 const getCurrentDateTime = () => {

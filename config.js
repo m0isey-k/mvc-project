@@ -4,12 +4,15 @@ module.exports = {
     host: "localhost",
   },
   session: {
-    secret: process.env.SESSION_SECRET || "default-secret",
+    secret: process.env.SESSION_SECRET || "household-task-manager-secret-key-2024",
     resave: false,
     saveUninitialized: false,
+    rolling: true,
     cookie: {
       secure: false,
-      maxAge: 24 * 60 * 60 * 1000, //24h
+      httpOnly: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000, 
+      sameSite: "lax",
     },
   },
   app: {

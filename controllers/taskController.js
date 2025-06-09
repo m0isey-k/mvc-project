@@ -4,24 +4,44 @@ const { LABELS: SORT_LABELS } = require("../constants/sortOptions")
 const { OK, BAD_REQUEST } = require("../constants/statusCode")
 
 const taskController = {
-  //Task list
   index: (req, res) => {
-    const sortBy = req.query.sort || "date_asc"
-    const tasks = Task.getTasksWithStatus(req.session.userId, sortBy)
-    const theme = req.session.theme || "light"
+    try {
+      const sortBy = req.query.sort || "date_asc"
+      const searchTerm = req.query.search || ""
+      const theme = req.session.theme || "light"
 
-    res.render("tasks/index", {
-      title: "My Tasks",
-      tasks,
-      currentSort: sortBy,
-      sortLabels: SORT_LABELS,
-      statusLabels: LABELS,
-      username: req.session.username,
-      theme: theme,
-    })
+      let tasks
+      if (searchTerm) {
+        tasks = Task.searchTasks(req.session.userId, searchTerm)
+        tasks = Task.sortTasks(tasks, sortBy)
+      } else {
+        tasks = Task.getTasksWithStatus(req.session.userId, sortBy)
+      }
+
+      const stats = Task.getTaskStats(req.session.userId)
+
+      res.render("tasks/index", {
+        title: "My Tasks",
+        tasks,
+        currentSort: sortBy,
+        searchTerm,
+        sortLabels: SORT_LABELS,
+        statusLabels: LABELS,
+        username: req.session.username,
+        theme: theme,
+        stats: stats,
+      })
+    } catch (error) {
+      console.error("Error loading tasks:", error)
+      res.status(500).render("error", {
+        title: "Error",
+        message: "Failed to load tasks",
+        theme: req.session.theme || "light",
+      })
+    }
   },
 
-  //Create task form
+  // Create task (form)
   showCreate: (req, res) => {
     const theme = req.session.theme || "light"
     res.render("tasks/create", {
@@ -32,7 +52,7 @@ const taskController = {
     })
   },
 
-  //New task
+  // Create task
   create: (req, res) => {
     try {
       const { title, description, dueDate } = req.body
@@ -59,15 +79,17 @@ const taskController = {
         })
       }
 
-      Task.create({
+      const task = Task.create({
         userId: req.session.userId,
-        title,
-        description,
+        title: title.trim(),
+        description: description ? description.trim() : "",
         dueDate,
       })
 
+      console.log(`Task created: ${task.title} (ID: ${task.id})`)
       res.redirect("/tasks")
     } catch (error) {
+      console.error("Error creating task:", error)
       const theme = req.session.theme || "light"
       res.status(BAD_REQUEST).render("tasks/create", {
         title: "Add Task",
@@ -77,8 +99,6 @@ const taskController = {
       })
     }
   },
-
- 
   toggleComplete: (req, res) => {
     try {
       const taskId = req.params.id
@@ -86,11 +106,13 @@ const taskController = {
 
       if (task && task.userId === req.session.userId) {
         const newStatus = task.status === COMPLETED ? PENDING : COMPLETED
-        Task.updateStatus(taskId, newStatus)
+        const updatedTask = Task.updateStatus(taskId, newStatus)
+        console.log(`Task ${taskId} status changed to: ${newStatus}`)
       }
 
       res.redirect("/tasks")
     } catch (error) {
+      console.error("Error toggling task status:", error)
       res.redirect("/tasks")
     }
   },
@@ -102,11 +124,13 @@ const taskController = {
       const task = Task.findById(taskId)
 
       if (task && task.userId === req.session.userId) {
-        Task.delete(taskId)
+        const deletedTask = Task.delete(taskId)
+        console.log(`Task deleted: ${deletedTask.title} (ID: ${taskId})`)
       }
 
       res.redirect("/tasks")
     } catch (error) {
+      console.error("Error deleting task:", error)
       res.redirect("/tasks")
     }
   },
@@ -115,6 +139,7 @@ const taskController = {
   toggleTheme: (req, res) => {
     const currentTheme = req.session.theme || "light"
     req.session.theme = currentTheme === "light" ? "dark" : "light"
+    console.log(`Theme changed to: ${req.session.theme}`)
     res.redirect(req.get("Referer") || "/tasks")
   },
 }
