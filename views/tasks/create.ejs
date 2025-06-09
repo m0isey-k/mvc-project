@@ -16,7 +16,7 @@
                     <a href="/tasks">My Tasks</a>
                     <form action="/tasks/toggle-theme" method="POST" style="display: inline;">
                         <button type="submit" class="theme-toggle" title="Toggle theme">
-                            <%= theme === 'dark' ? '☀️' : '🌙' %>
+                            <%= theme === 'dark' ? '☀' : '☾' %>
                         </button>
                     </form>
                     <form action="/auth/logout" method="POST" style="display: inline;">
@@ -73,15 +73,13 @@
     </div>
 
     <script>
-        // Set default datetime to tomorrow at noon
         document.addEventListener('DOMContentLoaded', function() {
             const tomorrow = new Date();
             tomorrow.setDate(tomorrow.getDate() + 1);
-            tomorrow.setHours(12, 0, 0, 0); // Set to noon
-            const tomorrowString = tomorrow.toISOString().slice(0, 16); // Format for datetime-local
+            tomorrow.setHours(12, 0, 0, 0);
+            const tomorrowString = tomorrow.toISOString().slice(0, 16);
             document.getElementById('dueDate').value = tomorrowString;
             
-            // Add form validation
             const form = document.querySelector('form');
             const titleInput = document.getElementById('title');
             const dueDateInput = document.getElementById('dueDate');
@@ -105,7 +103,6 @@
                 }
             });
 
-            // Add real-time validation feedback
             dueDateInput.addEventListener('change', function() {
                 const selectedDateTime = new Date(this.value);
                 const now = new Date();

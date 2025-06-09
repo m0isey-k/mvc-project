@@ -21,21 +21,13 @@ class User {
     const { getNextUserId } = require("../store/dataStore")
 
     const user = new User(username, email, hashedPassword, getNextUserId())
-
-    console.log(`Creating user with hashed password: ${!!user.password}`)
-
     addUser(user)
-
     return user
   }
 
   static findByEmail(email) {
     const users = getUsers()
-    const user = users.find((user) => user.email === email)
-    if (user) {
-      console.log(`Found user by email: ${user.username}, password exists: ${!!user.password}`)
-    }
-    return user
+    return users.find((user) => user.email === email)
   }
 
   static findById(id) {
@@ -50,10 +42,6 @@ class User {
 
   static async validatePassword(plainPassword, hashedPassword) {
     if (!plainPassword || !hashedPassword) {
-      console.error("validatePassword: Missing arguments", {
-        plainPassword: !!plainPassword,
-        hashedPassword: !!hashedPassword,
-      })
       throw new Error("Missing password arguments")
     }
     return await bcrypt.compare(plainPassword, hashedPassword)
